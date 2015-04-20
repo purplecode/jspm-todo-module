@@ -2,12 +2,13 @@
 import LocalStorage from './storage/LocalStorage';
 import CookieStorage from './storage/CookieStorage';
 import LokiStorage from './storage/LokiStorage';
+import IndexedDbStorage from './storage/IndexedDbStorage';
 
 export default class StorageFactory {
-  
+
   constructor(storageType = 'loki') {
-    switch (storageType) {
-      case 'localStorage':
+    switch (storageType.toLowerCase()) {
+      case 'localstorage':
         this.storage = new LocalStorage();
         break;
       case 'cookies':
@@ -15,6 +16,9 @@ export default class StorageFactory {
         break;
       case 'loki':
         this.storage = new LokiStorage();
+        break;
+      case 'indexeddb':
+        this.storage = new IndexedDbStorage();
         break;
       default:
         throw new Error('Unknown storage type: ' + storageType);

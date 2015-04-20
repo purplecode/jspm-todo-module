@@ -51,8 +51,10 @@ export class Storage {
    * @returns {*}
    */
   get() {
-    this.items = this.getFromStorage();
-    return this.items;
+    return new Promise((resolve, reject) => {
+      this.items = this.getFromStorage();
+        resolve(this.items);
+    });
   }
 
   filter(filter) {
@@ -65,7 +67,7 @@ export class Storage {
     });
   }
 
-  getFromStorage() {
+  getFromStorage(limit=10) {
     throw new Error('getFromStorage Not implemented');
   }
 

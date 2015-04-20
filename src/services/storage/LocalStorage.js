@@ -12,8 +12,10 @@ export default class LocalStorage extends Storage {
   /**
    * @returns {Array}
    */
-  getFromStorage() {
-    return JSON.parse(localStorage.getItem(STORAGE_ID) || '[]');
+  getFromStorage(limit=10) {
+    return new Promise((resolve, reject) => {
+      resolve(JSON.parse(localStorage.getItem(STORAGE_ID) || '[]').slice(limit));
+    });
   }
 
   /**

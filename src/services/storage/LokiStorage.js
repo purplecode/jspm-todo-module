@@ -65,8 +65,13 @@ export default class LokiStorage extends Storage {
   /**
    * @returns {Array}
    */
-  getFromStorage() {
-    return this.collection.find();
+  getFromStorage(limit=10) {
+    return new Promise((resolve, reject) => {
+      window.collection = this.collection;
+      let result = this.collection.find(null /* happy debugging */);
+      window.result = result;
+      resolve(result.limit(10).data());
+    });
   }
 
   /**

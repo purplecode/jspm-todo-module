@@ -10,12 +10,14 @@ export default class CookieStorage extends Storage {
   }
 
   /**
-   * @returns {Array}
+   * @returns {Promise}
    */
-  getFromStorage() {
-    let result = document.cookie.match(new RegExp(STORAGE_ID + '=([^;]+)'));
-    result = result && JSON.parse(result[1]);
-    return result || [];
+  getFromStorage(limit=10) {
+    return new Promise((resolve, reject) => {
+      let result = document.cookie.match(new RegExp(STORAGE_ID + '=([^;]+)'));
+      result = result && JSON.parse(result[1]);
+      resolve(result.slice(limit) || []);
+    });
   }
 
   /**

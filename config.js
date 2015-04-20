@@ -21,6 +21,7 @@ System.config({
     "babel": "npm:babel@4.7.16",
     "babel-runtime": "npm:babel-runtime@4.7.16",
     "css": "github:systemjs/plugin-css@0.1.9",
+    "dexie": "github:dfahlander/Dexie.js@1.0.4",
     "jade": "github:johnsoftek/plugin-jade@0.4.0",
     "lodash": "npm:lodash@3.7.0",
     "lokijs": "github:techfort/LokiJS@1.2.5",

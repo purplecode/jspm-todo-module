@@ -18,7 +18,19 @@ todoModule.directive('todo', function(StorageFactory) {
     controller: ($scope, $filter) => {
 
       let storage = new StorageFactory($scope.storage).get();
-      $scope.todos = storage.get();
+
+      function load() {
+        return storage.get().then(function(todos) {
+          $scope.todos = todos;
+          $scope.$apply();
+          return todos;
+        });
+      }
+
+
+      $scope.todos = [];
+      load()
+
       $scope.newTodo = '';
       $scope.editedTodo = null;
 
@@ -44,9 +56,10 @@ todoModule.directive('todo', function(StorageFactory) {
         };
 
         storage.add(newTodo).then(function success() {
-          $scope.newTodo = null;
-          $scope.todos = storage.get();
-          $scope.$apply();
+          load().then(function() {
+            $scope.newTodo = null;
+            $scope.$apply();
+          });
         });
       };
 
@@ -90,18 +103,18 @@ todoModule.directive('todo', function(StorageFactory) {
       };
 
       $scope.removeTodo = (todo) => {
-        storage.remove(todo);
+        storage.remove(todo).then(load);
       };
 
       $scope.toggleCompleted = (todo) => {
         storage.save(todo)
           .catch((error) => {
             throw error;
-          });
+          }).then(load);
       };
 
       $scope.clearCompletedTodos = () => {
-        storage.filter({completed : true});
+        storage.filter({completed : true}).then(load);
       };
 
       $scope.markAll = (completed) => {
