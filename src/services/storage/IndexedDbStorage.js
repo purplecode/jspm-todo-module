@@ -21,6 +21,15 @@ class IndexedDbStorage extends Storage {
     }
 
     /**
+     * @returns {Promise}
+     */
+    count() {
+        return new Promise((resolve, reject) => {
+            this.todos.count(resolve)
+        });
+    }
+
+    /**
      * @param {*} item
      * @returns {Promise}
      */

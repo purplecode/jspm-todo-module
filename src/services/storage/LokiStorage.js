@@ -16,6 +16,17 @@ export default class LokiStorage extends Storage {
   }
 
   /**
+   * @returns {Promise}
+   */
+  count() {
+    return new Promise((resolve, reject) => {
+      // TODO any better idea?
+      let all = this.collection.find() || [];
+      resolve(all.length);
+    });
+  }
+
+  /**
    * @param {*} item
    * @returns {Promise}
    */
@@ -70,7 +81,7 @@ export default class LokiStorage extends Storage {
       window.collection = this.collection;
       let result = this.collection.find(null /* happy debugging */);
       window.result = result;
-      resolve(result.limit(10).data());
+      resolve(result.limit(limit).data());
     });
   }
 

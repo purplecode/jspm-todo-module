@@ -9,6 +9,15 @@ export class Storage {
   }
 
   /**
+   * @returns {Promise}
+   */
+  count() {
+    return new Promise(() => {
+        resolve(this.items.length);
+      });
+  }
+
+  /**
    * @param {*} item
    * @returns {Promise}
    */

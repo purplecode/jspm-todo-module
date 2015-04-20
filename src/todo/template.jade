@@ -16,7 +16,7 @@ section#todoapp
                     input.edit(ng-trim='false', ng-model='todo.title', todo-escape='revertEdits(todo)', ng-blur="saveEdits(todo, 'blur')", todo-focus='todo == editedTodo')
     footer#footer(ng-show='todos.length', ng-cloak='')
         span#todo-count
-            strong {{remainingCount}}
+            strong {{remainingCount}}/{{totalCount}}
             ng-pluralize(count='remainingCount', when="{ one: 'item left', other: 'items left' }")
         ul#filters
             li
