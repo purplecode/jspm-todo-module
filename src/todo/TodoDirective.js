@@ -29,28 +29,29 @@ todoModule.directive('todo', function (StorageFactory) {
         //  return todos;
         //});
 
-        return storage.count().then(function (count) {
-          return storage.get().then(function (todos) {
-            $scope.todos = todos;
-            $scope.totalCount = count;
-            $scope.$apply();
+        return storage.count().then(function (totalCount) {
+          return storage.count({completed:true}).then(function (completedCount) {
+            return storage.get().then(function (todos) {
+              $scope.todos = todos;
+              $scope.totalCount = totalCount;
+              $scope.completedCount = completedCount;
+              $scope.remainingCount = totalCount - completedCount;
+              $scope.allChecked = !$scope.remainingCount;
+              $scope.$apply();
+            });
           });
         });
       }
 
       $scope.todos = [];
       $scope.totalCount = 0;
+      $scope.completedCount = 0;
+      $scope.remainingCount = 0;
 
       load()
 
       $scope.newTodo = '';
       $scope.editedTodo = null;
-
-      $scope.$watch('todos', () => {
-        $scope.remainingCount = $filter('filter')($scope.todos, {completed: false}).length;
-        $scope.completedCount = $scope.todos.length - $scope.remainingCount;
-        $scope.allChecked = !$scope.remainingCount;
-      }, true);
 
       $scope.onStatusChange = (status) => {
         $scope.statusFilter = (status === 'active') ?

@@ -11,9 +11,10 @@ export class Storage {
   /**
    * @returns {Promise}
    */
-  count() {
+  count(filter=null) {
     return new Promise(() => {
-        resolve(this.items.length);
+        var results = filter ? _.filter(this.items, (item) => _.matches(filter)(item)) : this.items;
+        resolve(results.length);
       });
   }
 

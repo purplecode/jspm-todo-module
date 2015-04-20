@@ -5,14 +5,13 @@ import _ from 'lodash';
 
 const DATABASE = 'todos';
 
-export default
-class IndexedDbStorage extends Storage {
+export default class IndexedDbStorage extends Storage {
 
     constructor() {
         super(this);
 
         let database = new dexie(DATABASE);
-        database.version(1).stores({'todos': "++id,title,completed"});
+        database.version(1).stores({'todos': "++id,title,strCompleted"});
         database.open().catch(function (error) {
             window.alert('Database opening error : ' + error);
         });
@@ -20,12 +19,30 @@ class IndexedDbStorage extends Storage {
         this.todos = database.todos;
     }
 
+    stringifyCompleted(todo) {
+        todo.strCompleted = todo.completed ? 'yes' : 'no';
+        return todo;
+    }
+
     /**
      * @returns {Promise}
      */
-    count() {
+    count(filter=null) {
         return new Promise((resolve, reject) => {
-            this.todos.count(resolve)
+            if(filter) {
+                if(_.has(filter, 'completed')) {
+                    this.stringifyCompleted(filter);
+                }
+                let builder = this.todos;
+                Object.keys(filter).forEach((key) => {
+                    if(key != 'completed') {
+                        builder = builder.where(key).equals(filter[key]);
+                    }
+                });
+                builder.count(resolve);
+            } else {
+                this.todos.count(resolve)
+            }
         });
     }
 
@@ -35,7 +52,7 @@ class IndexedDbStorage extends Storage {
      */
     add(item) {
         return new Promise((resolve, reject) => {
-            this.todos.add(item);
+            this.todos.add(this.stringifyCompleted(item));
             resolve(item);
         });
     }
@@ -46,7 +63,7 @@ class IndexedDbStorage extends Storage {
      */
     addAll(items) {
         return new Promise((resolve, reject) => {
-            _.each(items, (item) => this.todos.add(item));
+            _.each(items, (item) => this.todos.add(this.stringifyCompleted(item)));
             resolve(items);
         });
     }
@@ -58,7 +75,7 @@ class IndexedDbStorage extends Storage {
      */
     save(item) {
         return new Promise((resolve, reject) => {
-            this.todos.update(item.id, item).then(resolve);
+            this.todos.update(item.id, this.stringifyCompleted(item)).then(resolve);
         });
     }
 
@@ -101,11 +118,6 @@ class IndexedDbStorage extends Storage {
      * @returns {Promise}
      */
     saveOnStorage(items) {
-        return new Promise((resolve, reject) => {
-            _.forEach(items, function (item) {
-                this.todos.add(item);
-            });
-            resolve(items);
-        });
+        return this.addAll(items);
     }
 }

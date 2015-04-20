@@ -18,10 +18,10 @@ export default class LokiStorage extends Storage {
   /**
    * @returns {Promise}
    */
-  count() {
+  count(filter=undefined) {
     return new Promise((resolve, reject) => {
       // TODO any better idea?
-      let all = this.collection.find() || [];
+      let all = this.collection.find(filter) || [];
       resolve(all.length);
     });
   }
