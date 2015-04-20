@@ -18,13 +18,13 @@ todoModule.directive('todo', function(StorageFactory) {
     controller: ($scope, $filter) => {
 
       let storage = new StorageFactory($scope.storage).get();
-      let todos = $scope.todos = storage.get();
+      $scope.todos = storage.get();
       $scope.newTodo = '';
       $scope.editedTodo = null;
 
       $scope.$watch('todos', () => {
-        $scope.remainingCount = $filter('filter')(todos, {completed: false}).length;
-        $scope.completedCount = todos.length - $scope.remainingCount;
+        $scope.remainingCount = $filter('filter')($scope.todos, {completed: false}).length;
+        $scope.completedCount = $scope.todos.length - $scope.remainingCount;
         $scope.allChecked = !$scope.remainingCount;
       }, true);
 
@@ -45,6 +45,7 @@ todoModule.directive('todo', function(StorageFactory) {
 
         storage.add(newTodo).then(function success() {
           $scope.newTodo = null;
+          $scope.todos = storage.get();
           $scope.$apply();
         });
       };
@@ -82,7 +83,7 @@ todoModule.directive('todo', function(StorageFactory) {
       };
 
       $scope.revertEdits = (todo) => {
-        todos[todos.indexOf(todo)] = $scope.originalTodo;
+        $scope.todos[$scope.todos.indexOf(todo)] = $scope.originalTodo;
         $scope.editedTodo = null;
         $scope.originalTodo = null;
         $scope.reverted = true;
@@ -100,13 +101,11 @@ todoModule.directive('todo', function(StorageFactory) {
       };
 
       $scope.clearCompletedTodos = () => {
-        storage.filter((todo) => {
-          return !todo.completed;
-        });
+        storage.filter({completed : true});
       };
 
       $scope.markAll = (completed) => {
-        todos.forEach((todo) => {
+        $scope.todos.forEach((todo) => {
           if (todo.completed !== completed) {
             todo.completed = !todo.completed;
             $scope.toggleCompleted(todo);

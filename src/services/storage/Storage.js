@@ -1,5 +1,6 @@
 'use strict';
 import angular from 'angular';
+import _ from 'lodash';
 
 export class Storage {
 
@@ -54,10 +55,10 @@ export class Storage {
     return this.items;
   }
 
-  filter(callback) {
+  filter(filter) {
     return new Promise((resolve, reject) => {
-      let incompleteTodos = this.items.filter(callback);
-      angular.copy(incompleteTodos, this.items);
+      let items = _.filter(this.items, (item) => !_.matches(filter)(item));
+      angular.copy(items, this.items);
       this.saveOnStorage(this.items).then((items) => {
         resolve(items);
       });

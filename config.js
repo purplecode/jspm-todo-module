@@ -1,14 +1,14 @@
 System.config({
   "transpiler": "babel",
+  "babelOptions": {
+    "experimental": false,
+    "optional": []
+  },
   "paths": {
     "*": "*.js",
     "github:*": "jspm_packages/github/*.js",
     "npm:*": "jspm_packages/npm/*.js",
     "github:angular/bower-angular@1.3.15": "src/shim/angular.js"
-  },
-  "babelOptions": {
-    "experimental": false,
-    "optional": []
   },
   "separateCSS": false,
   "buildCSS": true
@@ -22,6 +22,8 @@ System.config({
     "babel-runtime": "npm:babel-runtime@4.7.16",
     "css": "github:systemjs/plugin-css@0.1.9",
     "jade": "github:johnsoftek/plugin-jade@0.4.0",
+    "lodash": "npm:lodash@3.7.0",
+    "lokijs": "github:techfort/LokiJS@1.2.5",
     "todomvc-app-css": "npm:todomvc-app-css@1.0.1",
     "todomvc-common": "npm:todomvc-common@1.0.1",
     "github:angular/bower-angular-mocks@1.3.15": {
@@ -422,6 +424,9 @@ System.config({
     "npm:lcov-parse@0.0.6": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "path": "github:jspm/nodelibs-path@0.1.0"
+    },
+    "npm:lodash@3.7.0": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:log-driver@1.2.4": {
       "util": "github:jspm/nodelibs-util@0.1.0"
