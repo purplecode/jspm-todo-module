@@ -7,7 +7,7 @@ import './style.css!';
 import todoModule from './module';
 import angular from 'angular';
 
-todoModule.directive('todo', function(StorageFactory) {
+todoModule.directive('todo', function (StorageFactory) {
   return {
     restrict: 'E',
     template: template,
@@ -29,8 +29,8 @@ todoModule.directive('todo', function(StorageFactory) {
         //  return todos;
         //});
 
-        return storage.count().then(function(count) {
-          return storage.get().then(function(todos) {
+        return storage.count().then(function (count) {
+          return storage.get().then(function (todos) {
             $scope.todos = todos;
             $scope.totalCount = count;
             $scope.$apply();
@@ -68,7 +68,7 @@ todoModule.directive('todo', function(StorageFactory) {
         };
 
         storage.add(newTodo).then(function success() {
-          load().then(function() {
+          load().then(function () {
             $scope.newTodo = null;
             $scope.$apply();
           });
@@ -126,7 +126,7 @@ todoModule.directive('todo', function(StorageFactory) {
       };
 
       $scope.clearCompletedTodos = () => {
-        storage.filter({completed : true}).then(load);
+        storage.filter({completed: true}).then(load);
       };
 
       $scope.markAll = (completed) => {
@@ -137,6 +137,27 @@ todoModule.directive('todo', function(StorageFactory) {
           }
         });
       };
+
+      $scope.addRandomCount = 5;
+
+      $scope.addRandomTodos = (count = 5) => {
+        let buffer = [];
+        while (count-- > 0) {
+          buffer.push({
+            completed: Math.random() < 0.5,
+            title: Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3)
+          });
+          if (buffer.length > 10) {
+            storage.addAll(buffer);
+            buffer = [];
+          }
+        }
+        if (buffer.length > 0) {
+          storage.addAll(buffer);
+        }
+        load();
+      };
+
     }
   };
 

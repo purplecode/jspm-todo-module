@@ -41,6 +41,18 @@ class IndexedDbStorage extends Storage {
     }
 
     /**
+     * @param {Array} items
+     * @returns {Promise}
+     */
+    addAll(items) {
+        return new Promise((resolve, reject) => {
+            _.each(items, (item) => this.todos.add(item));
+            resolve(items);
+        });
+    }
+
+
+    /**
      * @param item
      * @returns {Promise}
      */

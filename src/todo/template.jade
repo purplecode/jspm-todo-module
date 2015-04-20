@@ -1,6 +1,9 @@
 section#todoapp
     header#header
         h1 todos
+        div.todo-add-random
+            input(type="number" ng-model="addRandomCount")
+            input(type="button" value="+" ng-click="addRandomTodos(addRandomCount)")
         form#todo-form(ng-submit='addTodo()')
             input#new-todo(placeholder='What needs to be done?' href='#' ng-model='newTodo' autofocus='')
     section#main(ng-show='todos.length', ng-cloak='')

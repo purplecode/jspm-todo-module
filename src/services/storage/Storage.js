@@ -31,6 +31,19 @@ export class Storage {
   }
 
   /**
+   * @param {Array} items
+   * @returns {Promise}
+   */
+  addAll(items) {
+    return new Promise((resolve, reject) => {
+      this.items.concat(items);
+      this.saveOnStorage(this.items).then((items) => {
+        resolve(items);
+      });
+    });
+  }
+
+  /**
    * @param item
    * @returns {Promise}
    */

@@ -38,6 +38,17 @@ export default class LokiStorage extends Storage {
   }
 
   /**
+   * @param {Array} items
+   * @returns {Promise}
+   */
+  addAll(items) {
+    return new Promise((resolve, reject) => {
+      this.collection.insert(items);
+      resolve(items);
+    });
+  }
+
+  /**
    * @param item
    * @returns {Promise}
    */
