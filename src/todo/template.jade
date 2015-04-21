@@ -4,6 +4,7 @@ section#todoapp
         div.todo-add-random.pure-form
             span Add random&nbsp;
             input(type="number" ng-model="addRandomCount" ng-keyup="$event.keyCode == 13 ?addRandomTodos(addRandomCount) : null" )
+            button#drop(ng-click='drop()' href='#' ng-show='totalCount') &nbsp;Drop
         form#todo-form(ng-submit='addTodo()')
             input#new-todo(placeholder='What needs to be done?' href='#' ng-model='newTodo' autofocus='')
     section#main(ng-show='todos.length', ng-cloak='')
@@ -28,7 +29,7 @@ section#todoapp
                     a(ng-class="{selected: status == 'active'}" href='#' ng-click="onStatusChange('active')" ) Active
                 li
                     a(ng-class="{selected: status == 'completed'}" href='#' ng-click="onStatusChange('completed')" ) Completed
-        button#clear-completed(ng-click='clearCompletedTodos()' href='#' ng-show='completedCount') Clear completed ({{completedCount}})
+        button#clear-completed(ng-click='clearCompletedTodos()' href='#' ng-show='completedCount') Clear completed
 footer#info
     p Double-click to edit a todo
     p
@@ -43,4 +44,3 @@ footer#info
     p
         | Part of
         a(href='http://todomvc.com') TodoMVC
-                                   

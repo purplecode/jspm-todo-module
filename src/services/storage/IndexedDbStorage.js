@@ -5,21 +5,21 @@ import _ from 'lodash';
 
 const DATABASE = 'todos';
 
-export default
-class IndexedDbStorage extends Storage {
+export default class IndexedDbStorage extends Storage {
 
   constructor() {
     super(this);
 
+    this.connect();
+  }
+
+  connect() {
     let database = new dexie(DATABASE);
-
-    //  database.delete();
-
     database.version(1).stores({'todos': "++id,title,strCompleted"});
     database.open().catch(function (error) {
       window.alert('Database opening error : ' + error);
     });
-
+    this.database = database;
     this.todos = database.todos;
   }
 
@@ -121,6 +121,17 @@ class IndexedDbStorage extends Storage {
         .each((item) => this.remove(item))
         .then(resolve);
     });
+  }
+
+  drop() {
+    return new Promise((resolve, reject) => {
+      this.database
+        .delete().then(function (deleteCount) {
+          console.log( "Deleted " + deleteCount + " objects");
+        }).then(() => { this.connect()})
+        .then(resolve);
+    });
+
   }
 
 }

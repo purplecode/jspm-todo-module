@@ -14,6 +14,9 @@ class LokiStorage extends Storage {
 
     var database = new lokijs(DATABASE);
     this.collection = database.addCollection(COLLECTION, {indices: []});
+
+    window.db = database;
+    window.c = this.collection;
   }
 
   /**
@@ -76,9 +79,20 @@ class LokiStorage extends Storage {
     });
   }
 
+  /**
+   * @param filter
+   * @returns {Promise}
+   */
   removeBy(filter) {
     return new Promise((resolve, reject) => {
       this.collection.removeWhere(filter);
+      resolve();
+    });
+  }
+
+  drop() {
+    return new Promise((resolve, reject) => {
+      this.collection.removeDataOnly();
       resolve();
     });
   }

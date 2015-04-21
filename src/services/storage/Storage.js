@@ -87,4 +87,11 @@ export class Storage {
     });
   }
 
+  drop() {
+    return new Promise((resolve, reject) => {
+      this.items = [];
+      resolve(items);
+    });
+  }
+
 }

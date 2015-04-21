@@ -132,6 +132,10 @@ todoModule.directive('todo', function (StorageFactory) {
         storage.removeBy({completed: true}).then(load);
       };
 
+      $scope.drop = () => {
+        storage.drop().then(load);
+      };
+
       $scope.markAll = (completed) => {
         $scope.todos.forEach((todo) => {
           if (todo.completed !== completed) {
