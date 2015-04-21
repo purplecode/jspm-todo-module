@@ -1,1 +1,1 @@
-body{background:#bdecff;width:90%;max-width:1000px}#todoapp h1{font-size:90px}.todos{width:47%}.todos.left{left:0;left:auto;float:left}.todos.right{right:0;left:auto;float:right}.todos .todo-add-random{text-align:right;padding:2px}
+body{background:#bdecff;width:90%;max-width:1000px}#todoapp h1{font-size:90px}.todos{width:47%}.todos.left{left:0;left:auto;float:left}.todos.right{right:0;left:auto;float:right}.todos .todo-add-random{text-align:right;padding:2px;border-bottom:1px solid #e6e6e6;color:#777}.todos .todo-add-random input{border:1px solid #e6e6e6;text-align:right}
