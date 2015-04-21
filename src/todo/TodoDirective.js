@@ -32,6 +32,7 @@ todoModule.directive('todo', function (StorageFactory) {
         return storage.count().then(function (totalCount) {
           return storage.count({completed: true}).then(function (completedCount) {
             return storage.find($scope.filter, 5).then(function (todos) {
+              $scope.filter = {};
               $scope.todos = todos;
               $scope.totalCount = totalCount;
               $scope.completedCount = completedCount;

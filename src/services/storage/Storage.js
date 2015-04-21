@@ -20,10 +20,14 @@ export class Storage {
   /**
    * @returns {Promise}
    */
-  find(filter=null, limit=10) {
+  find(filter=null, limit=null) {
     return new Promise((resolve, reject) => {
       var results = filter ? _.filter(this.items, (item) => _.matches(filter)(item)) : this.items;
-      resolve(results.slice(limit));
+      if(limit) {
+        resolve(results.slice(limit));
+      } else {
+        resolve(results);
+      }
     });
   }
 

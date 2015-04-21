@@ -6,25 +6,29 @@ import lokijs from 'lokijs';
 const DATABASE = 'todo-module';
 const COLLECTION = 'todos';
 
-export default class LokiStorage extends Storage {
+export default
+class LokiStorage extends Storage {
 
   constructor() {
     super(this);
 
-    var database =  new lokijs(DATABASE);
-    this.collection = database.addCollection(COLLECTION, { indices: [] });
+    var database = new lokijs(DATABASE);
+    this.collection = database.addCollection(COLLECTION, {indices: []});
   }
 
   /**
    * @returns {Promise}
    */
-  find(filter=null, limit=10) {
+  find(filter = null, limit = null) {
     return new Promise((resolve, reject) => {
-      let result = this.collection.find(null)
-        if(filter) {
-          result.find(filter);
-        }
-      resolve(result.limit(limit).data());
+      let result = this.collection.find(null);
+      if (filter) {
+        result = result.find(filter);
+      }
+      if (limit) {
+        result = result.limit(limit);
+      }
+      resolve(result.data());
     });
   }
 
@@ -89,7 +93,7 @@ export default class LokiStorage extends Storage {
   /**
    * @returns {Array}
    */
-  getFromStorage(limit=10) {
+  getFromStorage(limit = 10) {
     return new Promise((resolve, reject) => {
       let result = this.collection.find(null /* happy debugging */);
       resolve(result.limit(limit).data());
