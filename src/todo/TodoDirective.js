@@ -20,15 +20,6 @@ todoModule.directive('todo', function (StorageFactory) {
       let storage = new StorageFactory($scope.storage).get();
 
       function load() {
-        // TODO why it does not work?
-        //return Promise.all(storage.get(), storage.count()).then(function(results) {
-        //  let [todos, count] = results;
-        //  $scope.todos = todos;
-        //  $scope.totalCount = count;
-        //  $scope.$apply();
-        //  return todos;
-        //});
-
         return storage.count().then(function (totalCount) {
           return storage.count({completed: true}).then(function (completedCount) {
             return storage.find($scope.filter, 5).then(function (todos) {
@@ -69,7 +60,6 @@ todoModule.directive('todo', function (StorageFactory) {
           title: $scope.newTodo.trim(),
           completed: false
         };
-
         storage.add(newTodo).then(function success() {
           load().then(function () {
             $scope.newTodo = null;
