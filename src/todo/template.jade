@@ -1,6 +1,6 @@
 section#todoapp
     header#header
-        h1 todos
+        h1 {{ storage }}
         div.todo-add-random
             input(type="number" ng-model="addRandomCount")
             input(type="button" value="+" ng-click="addRandomTodos(addRandomCount)")

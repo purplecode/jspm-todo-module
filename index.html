@@ -1,17 +1,18 @@
 <!doctype html>
 <html lang="en" data-framework="angularES6">
 <head>
-    <meta charset="utf-8">
-    <title>Todo Module Demo</title>
-    <meta name="description" content="Todo Module Demo">
+  <meta charset="utf-8">
+  <title>Todo Module Demo</title>
+  <meta name="description" content="Todo Module Demo">
 </head>
 
 <body>
-<div>
-    <todo storage="indexedDb"></todo>
+
+<div class="todos left">
+  <todo storage="LokiJs"></todo>
 </div>
-<div>
-    <todo storage="loki"></todo>
+<div  class="todos right">
+  <todo storage="IndexedDb  "></todo>
 </div>
 
 <script src="jspm_packages/system.js"></script>
@@ -19,7 +20,7 @@
 <script src="bower_components/angular/angular.js"></script>
 
 <script>
-    System.import('src/TodoDemo').catch(console.error.bind(console));
+  System.import('src/TodoDemo').catch(console.error.bind(console));
 </script>
 
 </body>

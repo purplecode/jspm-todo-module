@@ -14,7 +14,7 @@ export default class StorageFactory {
       case 'cookies':
         this.storage = new CookieStorage();
         break;
-      case 'loki':
+      case 'lokijs':
         this.storage = new LokiStorage();
         break;
       case 'indexeddb':
