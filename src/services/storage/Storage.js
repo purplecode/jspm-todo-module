@@ -12,10 +12,19 @@ export class Storage {
    * @returns {Promise}
    */
   count(filter=null) {
+    return this.find(filter).then((results) => {
+      return results.length;
+    });
+  }
+
+  /**
+   * @returns {Promise}
+   */
+  find(filter=null, limit=10) {
     return new Promise((resolve, reject) => {
-        var results = filter ? _.filter(this.items, (item) => _.matches(filter)(item)) : this.items;
-        resolve(results.length);
-      });
+      var results = filter ? _.filter(this.items, (item) => _.matches(filter)(item)) : this.items;
+      resolve(results.slice(limit));
+    });
   }
 
   /**

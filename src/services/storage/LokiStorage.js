@@ -18,11 +18,13 @@ export default class LokiStorage extends Storage {
   /**
    * @returns {Promise}
    */
-  count(filter=undefined) {
+  find(filter=null, limit=10) {
     return new Promise((resolve, reject) => {
-      // TODO any better idea?
-      let all = this.collection.find(filter) || [];
-      resolve(all.length);
+      let result = this.collection.find(null)
+        if(filter) {
+          result.find(filter);
+        }
+      resolve(result.limit(limit).data());
     });
   }
 
@@ -89,9 +91,7 @@ export default class LokiStorage extends Storage {
    */
   getFromStorage(limit=10) {
     return new Promise((resolve, reject) => {
-      window.collection = this.collection;
       let result = this.collection.find(null /* happy debugging */);
-      window.result = result;
       resolve(result.limit(limit).data());
     });
   }
