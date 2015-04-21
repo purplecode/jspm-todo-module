@@ -76,37 +76,11 @@ class LokiStorage extends Storage {
     });
   }
 
-  /**
-   * @returns {*}
-   */
-  get() {
-    return this.getFromStorage();
-  }
-
-  filter(filter) {
+  removeBy(filter) {
     return new Promise((resolve, reject) => {
       this.collection.removeWhere(filter);
       resolve();
     });
   }
 
-  /**
-   * @returns {Array}
-   */
-  getFromStorage(limit = 10) {
-    return new Promise((resolve, reject) => {
-      let result = this.collection.find(null /* happy debugging */);
-      resolve(result.limit(limit).data());
-    });
-  }
-
-  /**
-   * @returns {Promise}
-   */
-  saveOnStorage(items) {
-    return new Promise((resolve, reject) => {
-      this.collection.insert(items);
-      resolve(items);
-    });
-  }
 }

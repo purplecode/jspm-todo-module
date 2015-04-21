@@ -11,7 +11,7 @@ export class Storage {
   /**
    * @returns {Promise}
    */
-  count(filter=null) {
+  count(filter = null) {
     return this.find(filter).then((results) => {
       return results.length;
     });
@@ -20,10 +20,10 @@ export class Storage {
   /**
    * @returns {Promise}
    */
-  find(filter=null, limit=null) {
+  find(filter = null, limit = null) {
     return new Promise((resolve, reject) => {
       var results = filter ? _.filter(this.items, (item) => _.matches(filter)(item)) : this.items;
-      if(limit) {
+      if (limit) {
         resolve(results.slice(limit));
       } else {
         resolve(results);
@@ -38,9 +38,7 @@ export class Storage {
   add(item) {
     return new Promise((resolve, reject) => {
       this.items.push(item);
-      this.saveOnStorage(this.items).then((items) => {
-        resolve(items);
-      });
+      resolve(items);
     });
   }
 
@@ -51,9 +49,7 @@ export class Storage {
   addAll(items) {
     return new Promise((resolve, reject) => {
       this.items.concat(items);
-      this.saveOnStorage(this.items).then((items) => {
-        resolve(items);
-      });
+      resolve(items);
     });
   }
 
@@ -64,9 +60,7 @@ export class Storage {
   save(item) {
     return new Promise((resolve, reject) => {
       this.items[this.items.indexOf(item)] = item;
-      this.saveOnStorage(this.items).then((items) => {
-        resolve(items);
-      });
+      resolve(items);
     });
   }
 
@@ -77,37 +71,20 @@ export class Storage {
   remove(item) {
     return new Promise((resolve, reject) => {
       this.items.splice(this.items.indexOf(item), 1);
-      this.saveOnStorage(this.items).then((items) => {
-        resolve(items);
-      });
+      resolve(items);
     });
   }
 
   /**
-   * @returns {*}
+   * @param filter
+   * @returns {Promise}
    */
-  get() {
-    return new Promise((resolve, reject) => {
-      this.items = this.getFromStorage();
-        resolve(this.items);
-    });
-  }
-
-  filter(filter) {
+  removeBy(filter) {
     return new Promise((resolve, reject) => {
       let items = _.filter(this.items, (item) => !_.matches(filter)(item));
       angular.copy(items, this.items);
-      this.saveOnStorage(this.items).then((items) => {
-        resolve(items);
-      });
+      resolve(items);
     });
   }
 
-  getFromStorage(limit=10) {
-    throw new Error('getFromStorage Not implemented');
-  }
-
-  saveOnStorage(items) {
-    throw new Error('saveOnStorage Not implemented');
-  }
 }

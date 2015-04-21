@@ -13,7 +13,7 @@ class IndexedDbStorage extends Storage {
 
     let database = new dexie(DATABASE);
 
-//  database.delete();
+    //  database.delete();
 
     database.version(1).stores({'todos': "++id,title,strCompleted"});
     database.open().catch(function (error) {
@@ -111,13 +111,10 @@ class IndexedDbStorage extends Storage {
   }
 
   /**
-   * @returns {*}
+   * @param filter
+   * @returns {Promise}
    */
-  get() {
-    return this.getFromStorage();
-  }
-
-  filter(filter) {
+  removeBy(filter) {
     return new Promise((resolve, reject) => {
       this.todos
         .filter((item) => _.matches(filter)(item))
@@ -126,19 +123,4 @@ class IndexedDbStorage extends Storage {
     });
   }
 
-  /**
-   * @returns {Promise}
-   */
-  getFromStorage(limit = 10) {
-    return new Promise((resolve, reject) => {
-      this.todos.limit(limit).toArray(resolve);
-    });
-  }
-
-  /**
-   * @returns {Promise}
-   */
-  saveOnStorage(items) {
-    return this.addAll(items);
-  }
 }

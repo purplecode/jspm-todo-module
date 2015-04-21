@@ -1,6 +1,4 @@
 'use strict';
-import LocalStorage from './storage/LocalStorage';
-import CookieStorage from './storage/CookieStorage';
 import LokiStorage from './storage/LokiStorage';
 import IndexedDbStorage from './storage/IndexedDbStorage';
 
@@ -8,12 +6,6 @@ export default class StorageFactory {
 
   constructor(storageType = 'loki') {
     switch (storageType.toLowerCase()) {
-      case 'localstorage':
-        this.storage = new LocalStorage();
-        break;
-      case 'cookies':
-        this.storage = new CookieStorage();
-        break;
       case 'lokijs':
         this.storage = new LokiStorage();
         break;

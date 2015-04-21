@@ -129,7 +129,7 @@ todoModule.directive('todo', function (StorageFactory) {
       };
 
       $scope.clearCompletedTodos = () => {
-        storage.filter({completed: true}).then(load);
+        storage.removeBy({completed: true}).then(load);
       };
 
       $scope.markAll = (completed) => {

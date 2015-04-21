@@ -18,16 +18,16 @@ section#todoapp
                 form(ng-submit="saveEdits(todo, 'submit')")
                     input.edit(ng-trim='false', ng-model='todo.title', todo-escape='revertEdits(todo)', ng-blur="saveEdits(todo, 'blur')", todo-focus='todo == editedTodo')
     footer#footer(ng-show='totalCount > 0', ng-cloak='')
-        span#todo-count
-            strong {{remainingCount}}/{{totalCount}}&nbsp;
-            ng-pluralize(count='remainingCount', when="{ one: 'item left', other: 'items left' }")
-        ul#filters
-            li
-                a(ng-class="{selected: status == ''}" href='#' ng-click="onStatusChange('')" ) All
-            li
-                a(ng-class="{selected: status == 'active'}" href='#' ng-click="onStatusChange('active')" ) Active
-            li
-                a(ng-class="{selected: status == 'completed'}" href='#' ng-click="onStatusChange('completed')" ) Completed
+        div#todo-count
+            strong {{remainingCount}}/{{totalCount}}
+        div
+            ul#filters
+                li
+                    a(ng-class="{selected: status == ''}" href='#' ng-click="onStatusChange('')" ) All
+                li
+                    a(ng-class="{selected: status == 'active'}" href='#' ng-click="onStatusChange('active')" ) Active
+                li
+                    a(ng-class="{selected: status == 'completed'}" href='#' ng-click="onStatusChange('completed')" ) Completed
         button#clear-completed(ng-click='clearCompletedTodos()' href='#' ng-show='completedCount') Clear completed ({{completedCount}})
 footer#info
     p Double-click to edit a todo
