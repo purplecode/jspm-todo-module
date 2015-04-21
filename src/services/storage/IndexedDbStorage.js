@@ -35,13 +35,13 @@ export default class IndexedDbStorage extends Storage {
                 }
                 let builder = this.todos;
                 Object.keys(filter).forEach((key) => {
-                    if(key != 'completed') {
+                    if(key !== 'completed') {
                         builder = builder.where(key).equals(filter[key]);
                     }
                 });
                 builder.count(resolve);
             } else {
-                this.todos.count(resolve)
+                this.todos.count(resolve);
             }
         });
     }

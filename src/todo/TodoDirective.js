@@ -30,7 +30,7 @@ todoModule.directive('todo', function (StorageFactory) {
         //});
 
         return storage.count().then(function (totalCount) {
-          return storage.count({completed:true}).then(function (completedCount) {
+          return storage.count({completed: true}).then(function (completedCount) {
             return storage.get().then(function (todos) {
               $scope.todos = todos;
               $scope.totalCount = totalCount;
@@ -48,7 +48,7 @@ todoModule.directive('todo', function (StorageFactory) {
       $scope.completedCount = 0;
       $scope.remainingCount = 0;
 
-      load()
+      load();
 
       $scope.newTodo = '';
       $scope.editedTodo = null;
@@ -143,13 +143,15 @@ todoModule.directive('todo', function (StorageFactory) {
 
       $scope.addRandomTodos = (count = 5) => {
         let buffer = [];
+        let initial = count;
         while (count-- > 0) {
           buffer.push({
             completed: Math.random() < 0.5,
             title: Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3)
           });
-          if (buffer.length > 10) {
+          if (buffer.length == 10) {
             storage.addAll(buffer);
+            console.log(`${count}/${initial}`);
             buffer = [];
           }
         }

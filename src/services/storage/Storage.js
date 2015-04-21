@@ -12,7 +12,7 @@ export class Storage {
    * @returns {Promise}
    */
   count(filter=null) {
-    return new Promise(() => {
+    return new Promise((resolve, reject) => {
         var results = filter ? _.filter(this.items, (item) => _.matches(filter)(item)) : this.items;
         resolve(results.length);
       });
