@@ -45,11 +45,14 @@ todoModule.directive('todo', function (StorageFactory) {
       $scope.newTodo = '';
       $scope.editedTodo = null;
 
-      $scope.onStatusChange = (status) => {
-          $scope.filter = (status === 'active') ?
-          {completed: false} : (status === 'completed') ?
-          {completed: true} : {};
+      $scope.addFilter = (field, value) => {
+          $scope.filter[field] = value;
           load();
+      };
+
+      $scope.removeFilter = (field) => {
+        delete $scope.filter[field];
+        load();
       };
 
       $scope.addTodo = () => {
