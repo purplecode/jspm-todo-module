@@ -13,10 +13,7 @@ class LokiStorage extends Storage {
     super(this);
 
     var database = new lokijs(DATABASE);
-    this.collection = database.addCollection(COLLECTION, {indices: []});
-
-    window.db = database;
-    window.c = this.collection;
+    this.collection = database.addCollection(COLLECTION, {indices: ['title','completed']});
   }
 
   /**
