@@ -1,6 +1,6 @@
 # Todo module
 
-Todo angular module based on http://todomvc.com/ using Loki.js and IndexedDB for storing models. Created for presentation on KnowCamp Wroclaw meetup about NoSQL and wed development.
+Todo angular module based on http://todomvc.com/ using Loki.js and IndexedDB for storing models. Created for presentation on KnowCamp Wroclaw meetup about NoSQL and web development.
 
 1. `npm install -g gulp`
 
